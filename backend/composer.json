@@ -1,0 +1,20 @@
+{
+    "name": "library/management",
+    "description": "Library Management System API",
+    "type": "project",
+    "require": {
+        "php": "^8.3",
+        "slim/slim": "^4.0",
+        "slim/psr7": "^1.0",
+        "firebase/php-jwt": "*",
+        "mongodb/mongodb": "*",
+        "vlucas/phpdotenv": "^5.0",
+        "phpmailer/phpmailer": "^6.0",
+        "dompdf/dompdf": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

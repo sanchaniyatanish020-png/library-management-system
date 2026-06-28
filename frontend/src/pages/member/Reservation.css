@@ -1,0 +1,12 @@
+.btn-danger {
+  padding: 6px 12px;
+  background: white;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.btn-danger:hover {
+  background: #ffe6e6;
+}
