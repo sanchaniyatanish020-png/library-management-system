@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     libzip-dev \
+    git \
     && docker-php-ext-install zip \
     && pecl install mongodb \
     && docker-php-ext-enable mongodb \
@@ -23,7 +24,12 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 
 # Install dependencies
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install \
+    --optimize-autoloader \
+    --no-scripts \
+    --no-interaction \
+    --ignore-platform-reqs \
+    --prefer-source
 
 # Copy all files
 COPY . .
