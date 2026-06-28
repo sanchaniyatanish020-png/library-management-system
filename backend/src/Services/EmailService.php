@@ -34,11 +34,11 @@ class EmailService {
     }
 
     public static function sendOverdueAlert(string $to, string $name, string $bookTitle, string $dueDate, int $fine): bool {
-        $subject = "⚠️ Overdue Book Alert - LibraryOS";
+        $subject = "⚠️ Overdue Book Alert - BookVault";
         $body = "
         <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
             <div style='background: #4f46e5; padding: 24px; border-radius: 12px 12px 0 0;'>
-                <h1 style='color: white; margin: 0; font-size: 20px;'>📚 LibraryOS</h1>
+                <h1 style='color: white; margin: 0; font-size: 20px;'>📚 BookVault</h1>
             </div>
             <div style='background: white; padding: 24px; border: 1px solid #eee; border-radius: 0 0 12px 12px;'>
                 <h2 style='color: #1a1a2e; font-size: 18px;'>Overdue Book Alert</h2>
@@ -57,7 +57,7 @@ class EmailService {
                    style='display: inline-block; background: #4f46e5; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 8px;'>
                    View My Borrows
                 </a>
-                <p style='color: #aaa; font-size: 12px; margin-top: 24px;'>LibraryOS Management System</p>
+                <p style='color: #aaa; font-size: 12px; margin-top: 24px;'>BookVault Management System</p>
             </div>
         </div>
         ";
@@ -65,11 +65,11 @@ class EmailService {
     }
 
     public static function sendBorrowConfirmation(string $to, string $name, string $bookTitle, string $dueDate): bool {
-        $subject = "✅ Book Borrowed Successfully - LibraryOS";
+        $subject = "✅ Book Borrowed Successfully - BookVault";
         $body = "
         <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
             <div style='background: #4f46e5; padding: 24px; border-radius: 12px 12px 0 0;'>
-                <h1 style='color: white; margin: 0; font-size: 20px;'>📚 LibraryOS</h1>
+                <h1 style='color: white; margin: 0; font-size: 20px;'>BookVault</h1>
             </div>
             <div style='background: white; padding: 24px; border: 1px solid #eee; border-radius: 0 0 12px 12px;'>
                 <h2 style='color: #1a1a2e; font-size: 18px;'>Book Borrowed Successfully!</h2>
@@ -84,7 +84,7 @@ class EmailService {
                    style='display: inline-block; background: #4f46e5; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 8px;'>
                    View My Borrows
                 </a>
-                <p style='color: #aaa; font-size: 12px; margin-top: 24px;'>LibraryOS Management System</p>
+                <p style='color: #aaa; font-size: 12px; margin-top: 24px;'>BookVault Management System</p>
             </div>
         </div>
         ";

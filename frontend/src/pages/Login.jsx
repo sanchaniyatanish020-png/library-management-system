@@ -27,14 +27,14 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 flex items-center justify-center p-4">
-      
+
       {/* Card */}
       <div className="w-full max-w-md">
-        
+
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="text-5xl mb-3">📚</div>
-          <h1 className="text-white text-2xl font-bold">LibraryOS</h1>
+          <h1 className="text-white text-2xl font-bold"> BookVault</h1>
           <p className="text-slate-400 text-sm mt-1">Library Management System</p>
         </div>
 

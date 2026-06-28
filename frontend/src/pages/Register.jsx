@@ -31,7 +31,7 @@ const Register = () => {
 
         <div className="text-center mb-8">
           <div className="text-5xl mb-3">📚</div>
-          <h1 className="text-white text-2xl font-bold">LibraryOS</h1>
+          <h1 className="text-white text-2xl font-bold"> BookVault</h1>
           <p className="text-slate-400 text-sm mt-1">Library Management System</p>
         </div>
 

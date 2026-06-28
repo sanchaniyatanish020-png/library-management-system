@@ -17,10 +17,9 @@ const Sidebar = () => {
       to={to}
       onClick={() => setMobileOpen(false)}
       className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-2.5 rounded-lg mx-2 text-sm transition-all duration-150 ${
-          isActive
-            ? 'bg-indigo-600 text-white font-medium'
-            : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+        `flex items-center gap-3 px-4 py-2.5 rounded-lg mx-2 text-sm transition-all duration-150 ${isActive
+          ? 'bg-indigo-600 text-white font-medium'
+          : 'text-slate-400 hover:bg-slate-800 hover:text-white'
         }`
       }
     >
@@ -33,8 +32,8 @@ const Sidebar = () => {
     <div className="flex flex-col h-full">
       <div className="px-5 py-5 border-b border-slate-700 flex items-center justify-between">
         <div>
-          <h1 className="text-white font-bold text-lg">📚 LibraryOS</h1>
-          <p className="text-slate-500 text-xs mt-0.5">Management System</p>
+          <h1 className="text-white font-bold text-lg">BookVault</h1>
+          <p className="text-slate-500 text-xs mt-0.5">Library Management System</p>
         </div>
         <button
           onClick={() => setMobileOpen(false)}
@@ -91,7 +90,7 @@ const Sidebar = () => {
 
       {/* Mobile Top Bar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-slate-900 px-4 py-3 flex items-center justify-between">
-        <h1 className="text-white font-bold text-base">📚 LibraryOS</h1>
+       <h1 className="text-white font-bold text-base">BookVault</h1>
         <button
           onClick={() => setMobileOpen(true)}
           className="text-white text-2xl"
@@ -116,32 +115,28 @@ const Sidebar = () => {
       {/* Mobile Bottom Nav */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-900 border-t border-slate-700 flex items-center justify-around px-2 py-2">
         <NavLink to="/catalog" className={({ isActive }) =>
-          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${
-            isActive ? 'text-indigo-400' : 'text-slate-500'
+          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500'
           }`
         }>
           <span className="text-xl">📖</span>
           <span>Catalog</span>
         </NavLink>
         <NavLink to="/my-borrows" className={({ isActive }) =>
-          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${
-            isActive ? 'text-indigo-400' : 'text-slate-500'
+          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500'
           }`
         }>
           <span className="text-xl">🔖</span>
           <span>Borrows</span>
         </NavLink>
         <NavLink to="/reservations" className={({ isActive }) =>
-          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${
-            isActive ? 'text-indigo-400' : 'text-slate-500'
+          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500'
           }`
         }>
           <span className="text-xl">⏰</span>
           <span>Reservations</span>
         </NavLink>
         <NavLink to="/fines" className={({ isActive }) =>
-          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${
-            isActive ? 'text-indigo-400' : 'text-slate-500'
+          `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500'
           }`
         }>
           <span className="text-xl">🧾</span>
@@ -149,8 +144,7 @@ const Sidebar = () => {
         </NavLink>
         {user?.role === 'admin' && (
           <NavLink to="/admin/dashboard" className={({ isActive }) =>
-            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${
-              isActive ? 'text-indigo-400' : 'text-slate-500'
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg text-xs transition-all ${isActive ? 'text-indigo-400' : 'text-slate-500'
             }`
           }>
             <span className="text-xl">📊</span>
