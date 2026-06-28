@@ -5,6 +5,10 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     pkg-config \
     curl \
+    unzip \
+    zip \
+    libzip-dev \
+    && docker-php-ext-install zip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install MongoDB extension
@@ -20,7 +24,7 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 
 # Install PHP dependencies
-RUN composer install --optimize-autoloader --no-scripts --no-interaction
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader --no-scripts --no-interaction
 
 # Copy rest of files
 COPY . .
