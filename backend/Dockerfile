@@ -29,5 +29,5 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader --no-scrip
 # Copy rest of files
 COPY . .
 
-# Start PHP server
-CMD php -S 0.0.0.0:$PORT -t public
+# Start PHP server using shell to expand $PORT variable
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8000} -t public"]
