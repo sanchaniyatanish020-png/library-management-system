@@ -9,6 +9,7 @@ const Catalog = () => {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [message, setMessage] = useState({ text: '', type: '' })
+  const [loadingBtn, setLoadingBtn] = useState('')
 
   const fetchBooks = async (q = '') => {
     try {
@@ -34,21 +35,27 @@ const Catalog = () => {
   }
 
   const handleBorrow = async (bookId) => {
+    setLoadingBtn('borrow-' + bookId)
     try {
       await issueBook({ book_id: bookId })
       showMessage('Book borrowed successfully! Due in 14 days.', 'success')
       fetchBooks(search)
     } catch (err) {
       showMessage(err.response?.data?.error || 'Failed to borrow', 'error')
+    } finally {
+      setLoadingBtn('')
     }
   }
 
   const handleReserve = async (bookId) => {
+    setLoadingBtn('reserve-' + bookId)
     try {
       await reserveBook({ book_id: bookId })
-      showMessage('Book reserved! You will be notified when available.', 'success')
+      showMessage('Book reserved successfully!', 'success')
     } catch (err) {
       showMessage(err.response?.data?.error || 'Failed to reserve', 'error')
+    } finally {
+      setLoadingBtn('')
     }
   }
 
@@ -125,12 +132,10 @@ const Catalog = () => {
                 key={book.id}
                 className="bg-white rounded-xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5"
               >
-                {/* Cover */}
                 <div className={`h-32 bg-gradient-to-br ${coverColors[i % coverColors.length]} flex items-center justify-center`}>
                   <span className="text-4xl">📖</span>
                 </div>
 
-                {/* Info */}
                 <div className="p-4">
                   <h3 className="text-sm font-semibold text-slate-800 leading-tight mb-1 line-clamp-2">
                     {book.title}
@@ -152,16 +157,34 @@ const Catalog = () => {
                   {book.available_copies > 0 ? (
                     <button
                       onClick={() => handleBorrow(book.id)}
-                      className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium rounded-lg transition-colors"
+                      disabled={loadingBtn === 'borrow-' + book.id}
+                      className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 active:scale-95 disabled:opacity-60 text-white text-xs font-medium rounded-lg transition-all duration-150"
                     >
-                      Borrow Book
+                      {loadingBtn === 'borrow-' + book.id ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                          </svg>
+                          Borrowing...
+                        </span>
+                      ) : 'Borrow Book'}
                     </button>
                   ) : (
                     <button
                       onClick={() => handleReserve(book.id)}
-                      className="w-full py-2 bg-white hover:bg-amber-50 text-amber-600 border border-amber-300 text-xs font-medium rounded-lg transition-colors"
+                      disabled={loadingBtn === 'reserve-' + book.id}
+                      className="w-full py-2 bg-white hover:bg-amber-50 active:bg-amber-100 active:scale-95 disabled:opacity-60 text-amber-600 border border-amber-300 text-xs font-medium rounded-lg transition-all duration-150"
                     >
-                      Reserve Book
+                      {loadingBtn === 'reserve-' + book.id ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                          </svg>
+                          Reserving...
+                        </span>
+                      ) : 'Reserve Book'}
                     </button>
                   )}
                 </div>

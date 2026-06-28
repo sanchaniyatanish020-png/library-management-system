@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+button {
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.96);
+}
