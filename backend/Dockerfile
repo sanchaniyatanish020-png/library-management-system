@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
