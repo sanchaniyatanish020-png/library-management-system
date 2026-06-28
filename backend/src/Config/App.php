@@ -7,7 +7,7 @@ use Dotenv\Dotenv;
 class App {
     public static function create(): \Slim\App {
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-        $dotenv->load();
+        $dotenv->safeLoad();
 
         $app = AppFactory::create();
         $app->addBodyParsingMiddleware();
