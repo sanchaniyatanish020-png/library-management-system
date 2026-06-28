@@ -83,7 +83,7 @@ const Dashboard = () => {
         ) : (
           <>
             {/* Stats */}
-            <div className="grid grid-cols-4 gap-4 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <StatCard label="Total Books" value={stats.books} icon="📚" sub="In collection" />
               <StatCard label="Active Borrows" value={stats.borrows} icon="🔖" sub="Currently out" />
               <StatCard label="Total Members" value={stats.members} icon="👥" sub="Registered users" />
@@ -91,7 +91,7 @@ const Dashboard = () => {
             </div>
 
             {/* Charts */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 
               {/* Bar Chart */}
               <div className="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">

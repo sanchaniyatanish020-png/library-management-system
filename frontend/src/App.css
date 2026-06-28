@@ -9,3 +9,10 @@
   background: #f8fafc;
   min-height: 100vh;
 }
+
+@media (max-width: 768px) {
+  .app-main {
+    margin-left: 0;
+    padding-bottom: 70px;
+  }
+}
