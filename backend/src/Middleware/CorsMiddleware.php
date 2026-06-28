@@ -5,18 +5,16 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
-use Slim\Psr7\Response as SlimResponse;
 
 class CorsMiddleware implements MiddlewareInterface {
     public function process(Request $request, RequestHandler $handler): Response {
-        
-        // Handle OPTIONS preflight request
         if ($request->getMethod() === 'OPTIONS') {
-            $response = new SlimResponse();
+            $response = new \Slim\Psr7\Response();
             return $response
                 ->withHeader('Access-Control-Allow-Origin', '*')
                 ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
-                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH')
+                ->withHeader('Access-Control-Max-Age', '86400')
                 ->withStatus(200);
         }
 
@@ -24,6 +22,6 @@ class CorsMiddleware implements MiddlewareInterface {
         return $response
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
     }
 }

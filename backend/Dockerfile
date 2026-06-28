@@ -1,20 +1,29 @@
-FROM php:8.3-apache
+FROM php:8.3-cli
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libssl-dev \
+    pkg-config \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install MongoDB extension
 RUN pecl install mongodb && docker-php-ext-enable mongodb
+
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
+# Set working directory
+WORKDIR /app
+
+# Copy composer files first
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --optimize-autoloader --no-scripts --no-interaction
+
+# Copy rest of files
 COPY . .
 
-RUN composer install --no-dev --optimize-autoloader
-
-RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
-RUN a2enmod rewrite
-
-EXPOSE 8080
-ENV PORT=8080
-
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-CMD ["/start.sh"]
+# Start PHP server
+CMD php -S 0.0.0.0:$PORT -t public
