@@ -20,6 +20,32 @@ class UserController {
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    public function makeAdmin(Request $request, Response $response, array $args): Response {
+        $user = User::findById($args['id']);
+        if (!$user) {
+            $response->getBody()->write(json_encode(['error' => 'User not found']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+        }
+
+        User::update($args['id'], ['role' => 'admin']);
+
+        $response->getBody()->write(json_encode(['message' => 'User promoted to admin successfully']));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public function removAdmin(Request $request, Response $response, array $args): Response {
+        $user = User::findById($args['id']);
+        if (!$user) {
+            $response->getBody()->write(json_encode(['error' => 'User not found']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+        }
+
+        User::update($args['id'], ['role' => 'member']);
+
+        $response->getBody()->write(json_encode(['message' => 'Admin demoted to member successfully']));
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
     public function destroy(Request $request, Response $response, array $args): Response {
         User::delete($args['id']);
         $response->getBody()->write(json_encode(['message' => 'User deleted']));

@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { getUsers, deleteUser } from '../../api/users'
+import { getUsers, deleteUser, makeAdmin, removeAdmin } from '../../api/users'
 import Topbar from '../../components/layout/Topbar'
 
 const ManageMembers = () => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState({ text: '', type: '' })
+  const [loadingBtn, setLoadingBtn] = useState('')
 
   const fetchUsers = async () => {
     try {
@@ -27,12 +28,43 @@ const ManageMembers = () => {
 
   const handleDelete = async (id) => {
     if (!confirm('Delete this member?')) return
+    setLoadingBtn('delete-' + id)
     try {
       await deleteUser(id)
       showMessage('Member deleted!', 'success')
       fetchUsers()
     } catch (err) {
       showMessage(err.response?.data?.error || 'Failed to delete', 'error')
+    } finally {
+      setLoadingBtn('')
+    }
+  }
+
+  const handleMakeAdmin = async (id) => {
+    if (!confirm('Promote this member to Admin?')) return
+    setLoadingBtn('admin-' + id)
+    try {
+      await makeAdmin(id)
+      showMessage('Member promoted to Admin!', 'success')
+      fetchUsers()
+    } catch (err) {
+      showMessage(err.response?.data?.error || 'Failed to promote', 'error')
+    } finally {
+      setLoadingBtn('')
+    }
+  }
+
+  const handleRemoveAdmin = async (id) => {
+    if (!confirm('Demote this admin to Member?')) return
+    setLoadingBtn('remove-' + id)
+    try {
+      await removeAdmin(id)
+      showMessage('Admin demoted to Member!', 'success')
+      fetchUsers()
+    } catch (err) {
+      showMessage(err.response?.data?.error || 'Failed to demote', 'error')
+    } finally {
+      setLoadingBtn('')
     }
   }
 
@@ -45,11 +77,10 @@ const ManageMembers = () => {
           <div className={`fixed top-4 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-medium ${
             message.type === 'success' ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'
           }`}>
-            {message.type === 'success' ? '✅' : '❌'} {message.text}
+            {message.text}
           </div>
         )}
 
-        {/* Stats */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
             <p className="text-xs text-slate-500 mb-1">Total Members</p>
@@ -79,7 +110,7 @@ const ManageMembers = () => {
                   <th className="text-left text-xs font-medium text-slate-500 px-5 py-3">Email</th>
                   <th className="text-left text-xs font-medium text-slate-500 px-5 py-3">Role</th>
                   <th className="text-left text-xs font-medium text-slate-500 px-5 py-3">Joined</th>
-                  <th className="text-left text-xs font-medium text-slate-500 px-5 py-3">Action</th>
+                  <th className="text-left text-xs font-medium text-slate-500 px-5 py-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,14 +138,32 @@ const ManageMembers = () => {
                       {u.created_at?.slice(0, 10)}
                     </td>
                     <td className="px-5 py-3">
-                      {u.role !== 'admin' && (
+                      <div className="flex gap-2">
+                        {u.role !== 'admin' ? (
+                          <button
+                            onClick={() => handleMakeAdmin(u.id)}
+                            disabled={loadingBtn === 'admin-' + u.id}
+                            className="text-xs px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-200 rounded-lg transition-colors disabled:opacity-60"
+                          >
+                            {loadingBtn === 'admin-' + u.id ? 'Promoting...' : 'Make Admin'}
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleRemoveAdmin(u.id)}
+                            disabled={loadingBtn === 'remove-' + u.id}
+                            className="text-xs px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-600 border border-amber-200 rounded-lg transition-colors disabled:opacity-60"
+                          >
+                            {loadingBtn === 'remove-' + u.id ? 'Demoting...' : 'Remove Admin'}
+                          </button>
+                        )}
                         <button
                           onClick={() => handleDelete(u.id)}
-                          className="text-xs px-3 py-1.5 bg-white hover:bg-red-50 text-red-500 border border-red-200 rounded-lg transition-colors"
+                          disabled={loadingBtn === 'delete-' + u.id}
+                          className="text-xs px-3 py-1.5 bg-white hover:bg-red-50 text-red-500 border border-red-200 rounded-lg transition-colors disabled:opacity-60"
                         >
-                          Delete
+                          {loadingBtn === 'delete-' + u.id ? 'Deleting...' : 'Delete'}
                         </button>
-                      )}
+                      </div>
                     </td>
                   </tr>
                 ))}

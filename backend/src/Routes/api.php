@@ -53,6 +53,8 @@ $app->group('/api/fines', function ($group) {
 // User routes (admin only)
 $app->group('/api/users', function ($group) {
     $group->get('', [UserController::class, 'index']);
+    $group->put('/{id}/make-admin', [UserController::class, 'makeAdmin']);
+    $group->put('/{id}/remove-admin', [UserController::class, 'removAdmin']);
     $group->delete('/{id}', [UserController::class, 'destroy']);
 })->add(AdminMiddleware::class)->add(AuthMiddleware::class);
 
